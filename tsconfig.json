@@ -19,7 +19,11 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@client/*": ["./src/app/*"],
+      "@server/*": ["./src/server/*"],
+      "@schemas": ["./src/zodSchemas"],
+      "@nasaApi": ["./src/app/api/nasa"]
     }
   },
   "include": [

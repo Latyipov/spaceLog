@@ -2,6 +2,7 @@
 
 import { api } from "@/utils/trpc";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function Home() {
   const helloQuery = api.example.hello.useQuery({});
@@ -71,6 +72,10 @@ export default function Home() {
       {mutation.isError && (
         <p className="text-red-600">Ошибка: {mutation.error.message}</p>
       )}
+
+      <Link href="/nasa/apod" className="text-blue-600 underline">
+        Посмотреть APOD
+      </Link>
     </main>
   );
 }
