@@ -9,4 +9,6 @@ export const apodSchema = z.object({
   media_type: z.enum(["image", "video"]),
 });
 
+export const apodArraySchema = z.array(apodSchema);
+
 export type ApodData = z.infer<typeof apodSchema>;
