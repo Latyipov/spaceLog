@@ -2,7 +2,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@server/db";
 import { compare } from "bcryptjs";
-import GoogleProvider from "next-auth/providers/google";
+// import GoogleProvider from "next-auth/providers/google";
 import type { NextAuthOptions } from "next-auth";
 
 export const authOptions: NextAuthOptions = {
@@ -66,7 +66,7 @@ export const authOptions: NextAuthOptions = {
     },
   },
   pages: {
-    signIn: "/signin", // твоя форма логина
-    error: "/signin", // та же страница для ошибок
+    signIn: "/signin",
+    error: "/signin",
   },
 };

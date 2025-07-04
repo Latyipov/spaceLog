@@ -9,9 +9,9 @@ export default function RegisterForm() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const register = trpcApi.user.registerNewUser.useMutation();
+  const register = trpcApi.user.createNewUser.useMutation();
 
-  const onSubmit = async (e) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const req = await register.mutateAsync({ email, name, password });

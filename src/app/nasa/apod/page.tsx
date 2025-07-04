@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { getApodByDate } from "@nasaApi";
 import type { ApodData } from "@schemas";
 import { DayPicker } from "react-day-picker";
@@ -61,10 +62,12 @@ export default function ApodPage() {
           <p className="text-sm text-gray-500">{data.date}</p>
 
           {data.media_type === "image" ? (
-            <img
+            <Image
               src={data.url}
               alt={data.title}
               className="rounded shadow max-w-full"
+              width={200}
+              height={100}
             />
           ) : (
             <iframe
