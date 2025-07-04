@@ -62,13 +62,14 @@ export default function ApodPage() {
           <p className="text-sm text-gray-500">{data.date}</p>
 
           {data.media_type === "image" ? (
-            <Image
-              src={data.url}
-              alt={data.title}
-              className="rounded shadow max-w-full"
-              width={200}
-              height={100}
-            />
+            <div className="relative aspect-[4/3]">
+              <Image
+                src={data.url}
+                alt={data.title}
+                fill
+                className="object-cover rounded shadow"
+              />
+            </div>
           ) : (
             <iframe
               src={data.url}
