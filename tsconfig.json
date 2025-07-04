@@ -23,7 +23,8 @@
       "@client/*": ["./src/app/*"],
       "@server/*": ["./src/server/*"],
       "@schemas": ["./src/zodSchemas"],
-      "@nasaApi": ["./src/app/api/nasa"]
+      "@nasaApi": ["./src/app/api/nasa"],
+      "@components/*": ["./src/app/components/*"]
     }
   },
   "include": [

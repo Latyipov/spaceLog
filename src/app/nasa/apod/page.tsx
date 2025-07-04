@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { getApodByDate } from "@nasaApi";
 import type { ApodData } from "@schemas";
 import { DayPicker } from "react-day-picker";
+import "react-day-picker/style.css";
+import { Loading } from "@components/Loading/Loading";
 
 export default function ApodPage() {
   const [data, setData] = useState<ApodData | null>(null);
@@ -17,6 +19,7 @@ export default function ApodPage() {
       setError(null);
       try {
         const apodData = await getApodByDate(selectedDay || new Date());
+        console.log(apodData);
         setData(apodData);
       } catch (err: unknown) {
         if (err instanceof Error) {
@@ -40,23 +43,16 @@ export default function ApodPage() {
         <DayPicker
           mode="single"
           selected={selectedDay}
-          onSelect={setSelectedDay}
-          required
-          footer={
-            selectedDay ? <p>Вы выбрали: {selectedDay.toString()}</p> : null
-          }
-          modifiersClassNames={{
-            selected: "bg-blue-500 text-white",
-            today: "font-bold underline",
+          onSelect={(day) => {
+            console.log(day);
+            if (day) setSelectedDay(day);
           }}
-          classNames={{
-            day: "rounded-md p-2 hover:bg-blue-100",
-            months: "flex gap-4",
-            caption: "text-lg font-semibold",
-          }}
+          startMonth={new Date(1995, 5)}
+          endMonth={new Date()}
+          disabled={{ after: new Date() }}
         />
       </div>
-      {loading && <p>Загрузка...</p>}
+      {loading && <Loading />}
       {error && <p className="text-red-600">{error}</p>}
 
       {data && (
