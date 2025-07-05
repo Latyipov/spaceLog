@@ -1,18 +1,22 @@
 import { z } from "zod";
 
-export const userSchema = z.object({
-  id: z.string().min(1),
+export const createUserSchema = z.object({
   email: z.string().email("wrong email").optional(),
-  password: z.string().min(3, "more than 3 symbols").max(100, "too much"),
-  name: z.string().optional(),
-  image: z.string().url().optional(),
+  password: z.string().min(3, "more than 3 symbols").max(20, "too much"),
+  name: z.string().min(3),
+});
+export const updateNameUserSchema = z.object({
+  name: z.string().min(3),
+});
+export const updateEmailUserSchema = z.object({
+  email: z.string().email("wrong email"),
+});
+export const updatePasswordUserSchema = z.object({
+  oldPassword: z.string().min(3),
+  newPassword: z.string().min(3, "more than 3 symbols").max(20, "too much"),
 });
 
-export const newUserSchema = userSchema.pick({
-  name: true,
-  email: true,
-  password: true,
-});
-
-export type AppUser = z.infer<typeof userSchema>;
-export type NewUser = z.infer<typeof newUserSchema>;
+export type CreateUser = z.infer<typeof createUserSchema>;
+export type updateNameUser = z.infer<typeof updateNameUserSchema>;
+export type updateEmailUser = z.infer<typeof updateEmailUserSchema>;
+export type updatePasswordUser = z.infer<typeof updatePasswordUserSchema>;

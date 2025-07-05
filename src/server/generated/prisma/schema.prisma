@@ -61,8 +61,10 @@ model Entry {
   userId      String
   date        DateTime
   title       String
-  mediaUrl    String
   explanation String
+  url         String?
+  hdurl       String?
+  media_type  String?
   comment     String?
   tags        String[]
   user        User       @relation(fields: [userId], references: [id])

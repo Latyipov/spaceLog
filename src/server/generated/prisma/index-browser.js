@@ -163,8 +163,10 @@ exports.Prisma.EntryScalarFieldEnum = {
   userId: 'userId',
   date: 'date',
   title: 'title',
-  mediaUrl: 'mediaUrl',
   explanation: 'explanation',
+  url: 'url',
+  hdurl: 'hdurl',
+  media_type: 'media_type',
   comment: 'comment',
   tags: 'tags'
 };

@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 export const apodSchema = z.object({
-  date: z.string(),
-  title: z.string(),
+  date: z.string().min(1),
+  title: z.string().min(1),
   explanation: z.string(),
   url: z.string().url(),
   hdurl: z.string().url().optional(),

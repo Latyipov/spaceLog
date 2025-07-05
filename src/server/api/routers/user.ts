@@ -1,5 +1,9 @@
-import { z } from "zod";
-import { newUserSchema } from "@/zodSchemas";
+import {
+  createUserSchema,
+  updateNameUserSchema,
+  updateEmailUserSchema,
+  updatePasswordUserSchema,
+} from "@/zodSchemas";
 import bcrypt from "bcryptjs";
 import {
   createTRPCRouter,
@@ -10,7 +14,7 @@ import { prisma } from "@/server/db";
 
 export const userRouter = createTRPCRouter({
   createNewUser: publicProcedure
-    .input(newUserSchema)
+    .input(createUserSchema)
     .mutation(async ({ input }) => {
       const existingUser = await prisma.user.findUnique({
         where: { email: input.email },
@@ -30,60 +34,55 @@ export const userRouter = createTRPCRouter({
       return { success: true, userId: newUser.id };
     }),
 
-  getUserById: publicProcedure
-    .input(z.object({ id: z.string().uuid() }))
-    .query(async ({ input }) => {
-      const user = await prisma.user.findUnique({
-        where: { id: input.id },
-        select: {
-          id: true,
-          email: true,
-          name: true,
-          createdAt: true,
-        },
-      });
-      if (!user) {
-        throw new Error("can't find the user");
-      }
-      return user;
-    }),
+  getUserById: protectedProcedure.query(async ({ ctx }) => {
+    const userId = ctx.session.user.id;
+    const user = await ctx.prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        email: true,
+        name: true,
+        createdAt: true,
+      },
+    });
+    if (!user) {
+      throw new Error("can't find the user");
+    }
+    return user;
+  }),
 
   updateUserName: protectedProcedure
-    .input(z.object({ id: z.string().uuid(), name: z.string().min(2) }))
-    .mutation(async ({ input }) => {
-      const updated = await prisma.user.update({
-        where: { id: input.id },
+    .input(updateNameUserSchema)
+    .mutation(async ({ input, ctx }) => {
+      const userId = ctx.session.user.id;
+      const updated = await ctx.prisma.user.update({
+        where: { id: userId },
         data: { name: input.name },
       });
       return { success: true, name: updated.name };
     }),
 
   updateEmail: protectedProcedure
-    .input(z.object({ id: z.string().uuid(), email: z.string().email() }))
-    .mutation(async ({ input }) => {
-      const existing = await prisma.user.findUnique({
+    .input(updateEmailUserSchema)
+    .mutation(async ({ input, ctx }) => {
+      const userId = ctx.session.user.id;
+      const existing = await ctx.prisma.user.findUnique({
         where: { email: input.email },
       });
       if (existing) throw new Error("this email is already registered");
 
-      await prisma.user.update({
-        where: { id: input.id },
+      const updated = await prisma.user.update({
+        where: { id: userId },
         data: { email: input.email },
       });
 
-      return { success: true };
+      return { success: true, email: updated.email };
     }),
 
   updatePassword: protectedProcedure
-    .input(
-      z.object({
-        id: z.string().uuid(),
-        oldPassword: z.string().min(6),
-        newPassword: z.string().min(6),
-      })
-    )
-    .mutation(async ({ input }) => {
-      const user = await prisma.user.findUnique({ where: { id: input.id } });
+    .input(updatePasswordUserSchema)
+    .mutation(async ({ input, ctx }) => {
+      const userId = ctx.session.user.id;
+      const user = await prisma.user.findUnique({ where: { id: userId } });
       if (!user) throw new Error("User not found");
 
       const isValid = await bcrypt.compare(input.oldPassword, user.password);
@@ -92,17 +91,16 @@ export const userRouter = createTRPCRouter({
       const hashed = await bcrypt.hash(input.newPassword, 10);
 
       await prisma.user.update({
-        where: { id: input.id },
+        where: { id: userId },
         data: { password: hashed },
       });
 
       return { success: true };
     }),
 
-  deleteById: protectedProcedure
-    .input(z.object({ id: z.string().uuid() }))
-    .mutation(async ({ input }) => {
-      await prisma.user.delete({ where: { id: input.id } });
-      return { success: true };
-    }),
+  deleteById: protectedProcedure.mutation(async ({ ctx }) => {
+    const userId = ctx.session.user.id;
+    await ctx.prisma.user.delete({ where: { id: userId } });
+    return { success: true };
+  }),
 });

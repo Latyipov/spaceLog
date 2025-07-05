@@ -5804,8 +5804,10 @@ export namespace Prisma {
     userId: string | null
     date: Date | null
     title: string | null
-    mediaUrl: string | null
     explanation: string | null
+    url: string | null
+    hdurl: string | null
+    media_type: string | null
     comment: string | null
   }
 
@@ -5814,8 +5816,10 @@ export namespace Prisma {
     userId: string | null
     date: Date | null
     title: string | null
-    mediaUrl: string | null
     explanation: string | null
+    url: string | null
+    hdurl: string | null
+    media_type: string | null
     comment: string | null
   }
 
@@ -5824,8 +5828,10 @@ export namespace Prisma {
     userId: number
     date: number
     title: number
-    mediaUrl: number
     explanation: number
+    url: number
+    hdurl: number
+    media_type: number
     comment: number
     tags: number
     _all: number
@@ -5837,8 +5843,10 @@ export namespace Prisma {
     userId?: true
     date?: true
     title?: true
-    mediaUrl?: true
     explanation?: true
+    url?: true
+    hdurl?: true
+    media_type?: true
     comment?: true
   }
 
@@ -5847,8 +5855,10 @@ export namespace Prisma {
     userId?: true
     date?: true
     title?: true
-    mediaUrl?: true
     explanation?: true
+    url?: true
+    hdurl?: true
+    media_type?: true
     comment?: true
   }
 
@@ -5857,8 +5867,10 @@ export namespace Prisma {
     userId?: true
     date?: true
     title?: true
-    mediaUrl?: true
     explanation?: true
+    url?: true
+    hdurl?: true
+    media_type?: true
     comment?: true
     tags?: true
     _all?: true
@@ -5941,8 +5953,10 @@ export namespace Prisma {
     userId: string
     date: Date
     title: string
-    mediaUrl: string
     explanation: string
+    url: string | null
+    hdurl: string | null
+    media_type: string | null
     comment: string | null
     tags: string[]
     _count: EntryCountAggregateOutputType | null
@@ -5969,8 +5983,10 @@ export namespace Prisma {
     userId?: boolean
     date?: boolean
     title?: boolean
-    mediaUrl?: boolean
     explanation?: boolean
+    url?: boolean
+    hdurl?: boolean
+    media_type?: boolean
     comment?: boolean
     tags?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -5983,8 +5999,10 @@ export namespace Prisma {
     userId?: boolean
     date?: boolean
     title?: boolean
-    mediaUrl?: boolean
     explanation?: boolean
+    url?: boolean
+    hdurl?: boolean
+    media_type?: boolean
     comment?: boolean
     tags?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -5995,8 +6013,10 @@ export namespace Prisma {
     userId?: boolean
     date?: boolean
     title?: boolean
-    mediaUrl?: boolean
     explanation?: boolean
+    url?: boolean
+    hdurl?: boolean
+    media_type?: boolean
     comment?: boolean
     tags?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -6007,13 +6027,15 @@ export namespace Prisma {
     userId?: boolean
     date?: boolean
     title?: boolean
-    mediaUrl?: boolean
     explanation?: boolean
+    url?: boolean
+    hdurl?: boolean
+    media_type?: boolean
     comment?: boolean
     tags?: boolean
   }
 
-  export type EntryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "date" | "title" | "mediaUrl" | "explanation" | "comment" | "tags", ExtArgs["result"]["entry"]>
+  export type EntryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "date" | "title" | "explanation" | "url" | "hdurl" | "media_type" | "comment" | "tags", ExtArgs["result"]["entry"]>
   export type EntryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     favorites?: boolean | Entry$favoritesArgs<ExtArgs>
@@ -6037,8 +6059,10 @@ export namespace Prisma {
       userId: string
       date: Date
       title: string
-      mediaUrl: string
       explanation: string
+      url: string | null
+      hdurl: string | null
+      media_type: string | null
       comment: string | null
       tags: string[]
     }, ExtArgs["result"]["entry"]>
@@ -6470,8 +6494,10 @@ export namespace Prisma {
     readonly userId: FieldRef<"Entry", 'String'>
     readonly date: FieldRef<"Entry", 'DateTime'>
     readonly title: FieldRef<"Entry", 'String'>
-    readonly mediaUrl: FieldRef<"Entry", 'String'>
     readonly explanation: FieldRef<"Entry", 'String'>
+    readonly url: FieldRef<"Entry", 'String'>
+    readonly hdurl: FieldRef<"Entry", 'String'>
+    readonly media_type: FieldRef<"Entry", 'String'>
     readonly comment: FieldRef<"Entry", 'String'>
     readonly tags: FieldRef<"Entry", 'String[]'>
   }
@@ -8021,8 +8047,10 @@ export namespace Prisma {
     userId: 'userId',
     date: 'date',
     title: 'title',
-    mediaUrl: 'mediaUrl',
     explanation: 'explanation',
+    url: 'url',
+    hdurl: 'hdurl',
+    media_type: 'media_type',
     comment: 'comment',
     tags: 'tags'
   };
@@ -8395,8 +8423,10 @@ export namespace Prisma {
     userId?: StringFilter<"Entry"> | string
     date?: DateTimeFilter<"Entry"> | Date | string
     title?: StringFilter<"Entry"> | string
-    mediaUrl?: StringFilter<"Entry"> | string
     explanation?: StringFilter<"Entry"> | string
+    url?: StringNullableFilter<"Entry"> | string | null
+    hdurl?: StringNullableFilter<"Entry"> | string | null
+    media_type?: StringNullableFilter<"Entry"> | string | null
     comment?: StringNullableFilter<"Entry"> | string | null
     tags?: StringNullableListFilter<"Entry">
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -8408,8 +8438,10 @@ export namespace Prisma {
     userId?: SortOrder
     date?: SortOrder
     title?: SortOrder
-    mediaUrl?: SortOrder
     explanation?: SortOrder
+    url?: SortOrderInput | SortOrder
+    hdurl?: SortOrderInput | SortOrder
+    media_type?: SortOrderInput | SortOrder
     comment?: SortOrderInput | SortOrder
     tags?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -8424,8 +8456,10 @@ export namespace Prisma {
     userId?: StringFilter<"Entry"> | string
     date?: DateTimeFilter<"Entry"> | Date | string
     title?: StringFilter<"Entry"> | string
-    mediaUrl?: StringFilter<"Entry"> | string
     explanation?: StringFilter<"Entry"> | string
+    url?: StringNullableFilter<"Entry"> | string | null
+    hdurl?: StringNullableFilter<"Entry"> | string | null
+    media_type?: StringNullableFilter<"Entry"> | string | null
     comment?: StringNullableFilter<"Entry"> | string | null
     tags?: StringNullableListFilter<"Entry">
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -8437,8 +8471,10 @@ export namespace Prisma {
     userId?: SortOrder
     date?: SortOrder
     title?: SortOrder
-    mediaUrl?: SortOrder
     explanation?: SortOrder
+    url?: SortOrderInput | SortOrder
+    hdurl?: SortOrderInput | SortOrder
+    media_type?: SortOrderInput | SortOrder
     comment?: SortOrderInput | SortOrder
     tags?: SortOrder
     _count?: EntryCountOrderByAggregateInput
@@ -8454,8 +8490,10 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"Entry"> | string
     date?: DateTimeWithAggregatesFilter<"Entry"> | Date | string
     title?: StringWithAggregatesFilter<"Entry"> | string
-    mediaUrl?: StringWithAggregatesFilter<"Entry"> | string
     explanation?: StringWithAggregatesFilter<"Entry"> | string
+    url?: StringNullableWithAggregatesFilter<"Entry"> | string | null
+    hdurl?: StringNullableWithAggregatesFilter<"Entry"> | string | null
+    media_type?: StringNullableWithAggregatesFilter<"Entry"> | string | null
     comment?: StringNullableWithAggregatesFilter<"Entry"> | string | null
     tags?: StringNullableListFilter<"Entry">
   }
@@ -8792,8 +8830,10 @@ export namespace Prisma {
     id?: string
     date: Date | string
     title: string
-    mediaUrl: string
     explanation: string
+    url?: string | null
+    hdurl?: string | null
+    media_type?: string | null
     comment?: string | null
     tags?: EntryCreatetagsInput | string[]
     user: UserCreateNestedOneWithoutEntriesInput
@@ -8805,8 +8845,10 @@ export namespace Prisma {
     userId: string
     date: Date | string
     title: string
-    mediaUrl: string
     explanation: string
+    url?: string | null
+    hdurl?: string | null
+    media_type?: string | null
     comment?: string | null
     tags?: EntryCreatetagsInput | string[]
     favorites?: FavoriteUncheckedCreateNestedManyWithoutEntryInput
@@ -8816,8 +8858,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     title?: StringFieldUpdateOperationsInput | string
-    mediaUrl?: StringFieldUpdateOperationsInput | string
     explanation?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    hdurl?: NullableStringFieldUpdateOperationsInput | string | null
+    media_type?: NullableStringFieldUpdateOperationsInput | string | null
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EntryUpdatetagsInput | string[]
     user?: UserUpdateOneRequiredWithoutEntriesNestedInput
@@ -8829,8 +8873,10 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     title?: StringFieldUpdateOperationsInput | string
-    mediaUrl?: StringFieldUpdateOperationsInput | string
     explanation?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    hdurl?: NullableStringFieldUpdateOperationsInput | string | null
+    media_type?: NullableStringFieldUpdateOperationsInput | string | null
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EntryUpdatetagsInput | string[]
     favorites?: FavoriteUncheckedUpdateManyWithoutEntryNestedInput
@@ -8841,8 +8887,10 @@ export namespace Prisma {
     userId: string
     date: Date | string
     title: string
-    mediaUrl: string
     explanation: string
+    url?: string | null
+    hdurl?: string | null
+    media_type?: string | null
     comment?: string | null
     tags?: EntryCreatetagsInput | string[]
   }
@@ -8851,8 +8899,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     title?: StringFieldUpdateOperationsInput | string
-    mediaUrl?: StringFieldUpdateOperationsInput | string
     explanation?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    hdurl?: NullableStringFieldUpdateOperationsInput | string | null
+    media_type?: NullableStringFieldUpdateOperationsInput | string | null
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EntryUpdatetagsInput | string[]
   }
@@ -8862,8 +8912,10 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     title?: StringFieldUpdateOperationsInput | string
-    mediaUrl?: StringFieldUpdateOperationsInput | string
     explanation?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    hdurl?: NullableStringFieldUpdateOperationsInput | string | null
+    media_type?: NullableStringFieldUpdateOperationsInput | string | null
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EntryUpdatetagsInput | string[]
   }
@@ -9246,8 +9298,10 @@ export namespace Prisma {
     userId?: SortOrder
     date?: SortOrder
     title?: SortOrder
-    mediaUrl?: SortOrder
     explanation?: SortOrder
+    url?: SortOrder
+    hdurl?: SortOrder
+    media_type?: SortOrder
     comment?: SortOrder
     tags?: SortOrder
   }
@@ -9257,8 +9311,10 @@ export namespace Prisma {
     userId?: SortOrder
     date?: SortOrder
     title?: SortOrder
-    mediaUrl?: SortOrder
     explanation?: SortOrder
+    url?: SortOrder
+    hdurl?: SortOrder
+    media_type?: SortOrder
     comment?: SortOrder
   }
 
@@ -9267,8 +9323,10 @@ export namespace Prisma {
     userId?: SortOrder
     date?: SortOrder
     title?: SortOrder
-    mediaUrl?: SortOrder
     explanation?: SortOrder
+    url?: SortOrder
+    hdurl?: SortOrder
+    media_type?: SortOrder
     comment?: SortOrder
   }
 
@@ -9833,8 +9891,10 @@ export namespace Prisma {
     id?: string
     date: Date | string
     title: string
-    mediaUrl: string
     explanation: string
+    url?: string | null
+    hdurl?: string | null
+    media_type?: string | null
     comment?: string | null
     tags?: EntryCreatetagsInput | string[]
     favorites?: FavoriteCreateNestedManyWithoutEntryInput
@@ -9844,8 +9904,10 @@ export namespace Prisma {
     id?: string
     date: Date | string
     title: string
-    mediaUrl: string
     explanation: string
+    url?: string | null
+    hdurl?: string | null
+    media_type?: string | null
     comment?: string | null
     tags?: EntryCreatetagsInput | string[]
     favorites?: FavoriteUncheckedCreateNestedManyWithoutEntryInput
@@ -9965,8 +10027,10 @@ export namespace Prisma {
     userId?: StringFilter<"Entry"> | string
     date?: DateTimeFilter<"Entry"> | Date | string
     title?: StringFilter<"Entry"> | string
-    mediaUrl?: StringFilter<"Entry"> | string
     explanation?: StringFilter<"Entry"> | string
+    url?: StringNullableFilter<"Entry"> | string | null
+    hdurl?: StringNullableFilter<"Entry"> | string | null
+    media_type?: StringNullableFilter<"Entry"> | string | null
     comment?: StringNullableFilter<"Entry"> | string | null
     tags?: StringNullableListFilter<"Entry">
   }
@@ -10240,8 +10304,10 @@ export namespace Prisma {
     id?: string
     date: Date | string
     title: string
-    mediaUrl: string
     explanation: string
+    url?: string | null
+    hdurl?: string | null
+    media_type?: string | null
     comment?: string | null
     tags?: EntryCreatetagsInput | string[]
     user: UserCreateNestedOneWithoutEntriesInput
@@ -10252,8 +10318,10 @@ export namespace Prisma {
     userId: string
     date: Date | string
     title: string
-    mediaUrl: string
     explanation: string
+    url?: string | null
+    hdurl?: string | null
+    media_type?: string | null
     comment?: string | null
     tags?: EntryCreatetagsInput | string[]
   }
@@ -10309,8 +10377,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     title?: StringFieldUpdateOperationsInput | string
-    mediaUrl?: StringFieldUpdateOperationsInput | string
     explanation?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    hdurl?: NullableStringFieldUpdateOperationsInput | string | null
+    media_type?: NullableStringFieldUpdateOperationsInput | string | null
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EntryUpdatetagsInput | string[]
     user?: UserUpdateOneRequiredWithoutEntriesNestedInput
@@ -10321,8 +10391,10 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     title?: StringFieldUpdateOperationsInput | string
-    mediaUrl?: StringFieldUpdateOperationsInput | string
     explanation?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    hdurl?: NullableStringFieldUpdateOperationsInput | string | null
+    media_type?: NullableStringFieldUpdateOperationsInput | string | null
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EntryUpdatetagsInput | string[]
   }
@@ -10388,8 +10460,10 @@ export namespace Prisma {
     id?: string
     date: Date | string
     title: string
-    mediaUrl: string
     explanation: string
+    url?: string | null
+    hdurl?: string | null
+    media_type?: string | null
     comment?: string | null
     tags?: EntryCreatetagsInput | string[]
   }
@@ -10463,8 +10537,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     title?: StringFieldUpdateOperationsInput | string
-    mediaUrl?: StringFieldUpdateOperationsInput | string
     explanation?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    hdurl?: NullableStringFieldUpdateOperationsInput | string | null
+    media_type?: NullableStringFieldUpdateOperationsInput | string | null
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EntryUpdatetagsInput | string[]
     favorites?: FavoriteUpdateManyWithoutEntryNestedInput
@@ -10474,8 +10550,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     title?: StringFieldUpdateOperationsInput | string
-    mediaUrl?: StringFieldUpdateOperationsInput | string
     explanation?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    hdurl?: NullableStringFieldUpdateOperationsInput | string | null
+    media_type?: NullableStringFieldUpdateOperationsInput | string | null
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EntryUpdatetagsInput | string[]
     favorites?: FavoriteUncheckedUpdateManyWithoutEntryNestedInput
@@ -10485,8 +10563,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     title?: StringFieldUpdateOperationsInput | string
-    mediaUrl?: StringFieldUpdateOperationsInput | string
     explanation?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    hdurl?: NullableStringFieldUpdateOperationsInput | string | null
+    media_type?: NullableStringFieldUpdateOperationsInput | string | null
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EntryUpdatetagsInput | string[]
   }
