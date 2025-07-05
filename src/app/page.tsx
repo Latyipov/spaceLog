@@ -7,7 +7,6 @@ import { Loading } from "@components/Loading/Loading";
 
 export default function Home() {
   const helloQuery = trpcApi.example.hello.useQuery();
-  console.log(helloQuery);
 
   const { data, isLoading, error } = trpcApi.health.dbOk.useQuery();
 
