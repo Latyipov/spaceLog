@@ -8,18 +8,18 @@ import { Loading } from "@components/Loading/Loading";
 export default function Home() {
   const helloQuery = trpcApi.example.hello.useQuery();
 
-  const { data, isLoading, error } = trpcApi.health.dbOk.useQuery();
+  // const { data, isLoading, error } = trpcApi.health.dbOk.useQuery();
 
-  if (isLoading) return <Loading />;
-  if (error) return <p>Error: {error.message}</p>;
+  // if (isLoading) return <Loading />;
+  // if (error) return <p>Error: {error.message}</p>;
 
   return (
     <main className="p-4 max-w-md mx-auto space-y-6">
       <h1 className="text-2xl font-bold">{helloQuery.data?.message}</h1>
 
-      <div>
+      {/* <div>
         ✅ {data?.message} — users in DB: {data?.users}
-      </div>
+      </div> */}
 
       <Link href="/nasa/apod" className="text-blue-600 underline">
         Посмотреть APOD
