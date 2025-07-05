@@ -15,7 +15,6 @@ export default function RegisterForm() {
     e.preventDefault();
     try {
       const req = await register.mutateAsync({ email, name, password });
-      console.log(req);
       alert("Успешно! Теперь войдите");
       if (req.success) {
         const res = await signIn("credentials", {

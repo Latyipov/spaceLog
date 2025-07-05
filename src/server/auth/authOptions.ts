@@ -5,11 +5,6 @@ import { compare } from "bcryptjs";
 // import GoogleProvider from "next-auth/providers/google";
 import type { NextAuthOptions } from "next-auth";
 
-console.log("NEXTAUTH_SECRET", process.env.NEXTAUTH_SECRET);
-console.log("DATABASE_URL", process.env.DATABASE_URL);
-console.log("NEXTAUTH_URL", process.env.NEXTAUTH_URL);
-console.log("NEXTAUTH_SECRET", process.env.NEXTAUTH_SECRET);
-
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [

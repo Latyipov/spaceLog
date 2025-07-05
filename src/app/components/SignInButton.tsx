@@ -4,7 +4,6 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 export function SignInButton() {
   const { data: session, status } = useSession();
-  console.log(session);
 
   if (status === "loading") return <p>Загрузка...</p>;
 

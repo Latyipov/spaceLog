@@ -20,7 +20,6 @@ export default function ApodPage() {
       setError(null);
       try {
         const apodData = await getApodByDate(selectedDay || new Date());
-        console.log(apodData);
         setData(apodData);
       } catch (err: unknown) {
         if (err instanceof Error) {
@@ -45,7 +44,6 @@ export default function ApodPage() {
           mode="single"
           selected={selectedDay}
           onSelect={(day) => {
-            console.log(day);
             if (day) setSelectedDay(day);
           }}
           startMonth={new Date(1995, 5)}

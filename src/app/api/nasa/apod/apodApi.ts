@@ -29,7 +29,6 @@ function responseCheck(response: Response) {
 
 export async function getApodByDate(date: Date): Promise<ApodData> {
   const url = BASE_URL;
-  console.log(formatDate(date));
   url.searchParams.set("date", formatDate(date));
   const response = await fetch(url.toString());
   responseCheck(response);
