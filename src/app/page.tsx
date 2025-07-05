@@ -3,7 +3,7 @@
 import { trpcApi } from "@/utils/trpc";
 import Link from "next/link";
 import { SignInButton } from "@components/SignInButton";
-import { Loading } from "@components/Loading/Loading";
+// import { Loading } from "@components/Loading/Loading";
 
 export default function Home() {
   const helloQuery = trpcApi.example.hello.useQuery();
