@@ -1,8 +1,8 @@
 "use client";
-
+import { FC } from "react";
 import styles from "./Loading.module.css";
 
-export function Loading() {
+export const Loading: FC = () => {
   return (
     <main>
       <div className={styles.container}>
@@ -18,4 +18,4 @@ export function Loading() {
       </div>
     </main>
   );
-}
+};
