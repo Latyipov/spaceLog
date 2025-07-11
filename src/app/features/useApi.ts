@@ -18,6 +18,7 @@ export function useApi<T>({
   const fetchData = useCallback(async () => {
     setLoading(true);
     setError(null);
+    setData(null);
     try {
       const result = await fetcher();
       setData(result);

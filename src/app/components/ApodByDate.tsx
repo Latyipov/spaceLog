@@ -29,6 +29,15 @@ export function ApodByDate() {
           startMonth={new Date(1995, 5)}
           endMonth={new Date()}
           disabled={{ after: new Date() }}
+          styles={{
+            day: {
+              width: "30px",
+              height: "30px",
+              fontSize: "12px",
+              lineHeight: "30px",
+            },
+            caption: { fontSize: "14px" },
+          }}
         />
       </div>
       {loading && <Loading />}
