@@ -1,19 +1,35 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import { getApodByCount } from "@nasaApi";
 import type { ApodData } from "@schemas";
-import { useApi } from "@client/features/useApi";
-import { Loading } from "@components/Loading/Loading";
 
-export function ApodByCount() {
+type ApodByCountPropsType = {
+  setData: Dispatch<SetStateAction<ApodData[] | null>>;
+  setLoading: Dispatch<SetStateAction<boolean>>;
+  setError: Dispatch<SetStateAction<string | null>>;
+};
+
+export function ApodByCount({
+  setData,
+  setLoading,
+  setError,
+}: ApodByCountPropsType) {
   const [count, setCount] = useState(5);
 
-  const { data, loading, error, fetchData } = useApi<ApodData[]>({
-    fetcher: () => getApodByCount(count),
-    deps: [count],
-  });
+  const fetchData = async () => {
+    setLoading(true);
+    setError(null);
+    setData(null);
+    try {
+      const result = await getApodByCount(count);
+      setData(result);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Unknown error");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -38,36 +54,6 @@ export function ApodByCount() {
           Apply
         </button>
       </div>
-
-      {loading && <Loading />}
-      {error && <p className="text-red-600">{error}</p>}
-
-      {data &&
-        data.map((dailyData) => (
-          <section key={dailyData.date} className="space-y-4">
-            <h2 className="text-xl font-semibold">{dailyData.title}</h2>
-            <p className="text-sm text-gray-500">{dailyData.date}</p>
-
-            {dailyData.media_type === "image" ? (
-              <div className="relative aspect-[4/3]">
-                <Image
-                  src={dailyData.url}
-                  alt={dailyData.title}
-                  fill
-                  className="object-cover rounded shadow"
-                />
-              </div>
-            ) : (
-              <iframe
-                src={dailyData.url}
-                title={dailyData.title}
-                allowFullScreen
-                className="w-full aspect-video rounded"
-              />
-            )}
-            <p className="text-justify">{dailyData.explanation}</p>
-          </section>
-        ))}
     </>
   );
 }
