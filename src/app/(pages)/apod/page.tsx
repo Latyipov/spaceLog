@@ -13,63 +13,58 @@ export default function ApodPage() {
   const [data, setData] = useState<ApodData[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  console.log(data);
+
+  const tabs = [
+    { id: "day", label: "By Day" },
+    { id: "range", label: "By Range" },
+    { id: "count", label: "By Count" },
+  ] as const;
+
   return (
-    <main className=" mx-auto  w-full md:w-[80%] ">
+    <main className=" mx-auto  w-full md:w-[80%] flex-1 ">
+      <div className="flex flex-col md:flex-row justify-center items-center md:items-start gap-4 md:gap-20 p-4 relative min-h-90">
+        <div className="flex flex-row md:flex-col gap-2 md:gap-4 p-2 md:p-4 bg-gray-900 rounded-xl shadow-md">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-4 py-2 rounded-lg transition text-sm md:text-base
+          ${
+            activeTab === tab.id
+              ? "bg-blue-600 text-white shadow-md"
+              : "text-gray-300 hover:text-white hover:bg-gray-700"
+          }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+        {activeTab === "day" && (
+          <ApodByDate
+            data={data}
+            setData={setData}
+            setLoading={setLoading}
+            setError={setError}
+          />
+        )}
+        {activeTab === "range" && (
+          <ApodByRange
+            setData={setData}
+            setLoading={setLoading}
+            setError={setError}
+          />
+        )}
+        {activeTab === "count" && (
+          <ApodByCount
+            setData={setData}
+            setLoading={setLoading}
+            setError={setError}
+          />
+        )}
+      </div>
       <h1 className="text-3xl text-center font-bold">
         NASA - Astronomy Picture of the Day
       </h1>
-      <div className="flex flex-raw justify-evenly aligin-center gap-4 p-4 relative">
-        <div className="flex flex-col gap-4 p-4">
-          <button
-            className={
-              activeTab === "day" ? "font-bold border-b-2 border-black" : ""
-            }
-            onClick={() => setActiveTab("day")}
-          >
-            By Day
-          </button>
-          <button
-            className={
-              activeTab === "range" ? "font-bold border-b-2 border-black" : ""
-            }
-            onClick={() => setActiveTab("range")}
-          >
-            By Range
-          </button>
-          <button
-            className={
-              activeTab === "count" ? "font-bold border-b-2 border-black" : ""
-            }
-            onClick={() => setActiveTab("count")}
-          >
-            By Count
-          </button>
-        </div>
-        <div className="">
-          {activeTab === "day" && (
-            <ApodByDate
-              setData={setData}
-              setLoading={setLoading}
-              setError={setError}
-            />
-          )}
-          {activeTab === "range" && (
-            <ApodByRange
-              setData={setData}
-              setLoading={setLoading}
-              setError={setError}
-            />
-          )}
-          {activeTab === "count" && (
-            <ApodByCount
-              setData={setData}
-              setLoading={setLoading}
-              setError={setError}
-            />
-          )}
-        </div>
-      </div>
       <ApodDataView data={data} loading={loading} error={error} />
     </main>
   );

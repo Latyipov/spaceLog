@@ -1,25 +1,37 @@
 "use client";
 
-import { useState, useEffect, type Dispatch, type SetStateAction } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import { getApodByDate } from "@nasaApi";
 import type { ApodData } from "@schemas";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 
 type ApodByDatePropsType = {
+  data: ApodData[] | null;
   setData: Dispatch<SetStateAction<ApodData[] | null>>;
   setLoading: Dispatch<SetStateAction<boolean>>;
   setError: Dispatch<SetStateAction<string | null>>;
 };
 
 export function ApodByDate({
+  data,
   setData,
   setLoading,
   setError,
 }: ApodByDatePropsType) {
   const [selectedDay, setSelectedDay] = useState<Date>();
+  const initialLoaded = useRef(false);
 
   useEffect(() => {
+    const isFirstLoading = !initialLoaded.current && !data?.length;
+    if (!isFirstLoading && !selectedDay) return;
+
     const fetchData = async () => {
       setLoading(true);
       setError(null);
@@ -27,6 +39,7 @@ export function ApodByDate({
       try {
         const result = await getApodByDate(selectedDay || new Date());
         setData([result]);
+        initialLoaded.current = true;
       } catch (err: unknown) {
         setError(err instanceof Error ? err.message : "Unknown error");
       } finally {
@@ -37,7 +50,7 @@ export function ApodByDate({
   }, [selectedDay]);
 
   return (
-    <>
+    <div className="rdp-wrapper">
       <DayPicker
         mode="single"
         selected={selectedDay}
@@ -47,6 +60,11 @@ export function ApodByDate({
         startMonth={new Date(1995, 5)}
         endMonth={new Date()}
         disabled={{ after: new Date() }}
+        modifiersClassNames={{
+          selected: "bg-blue-600 text-white rounded-full",
+          disabled: "text-gray-500 cursor-not-allowed",
+          today: "text-sky-300",
+        }}
         styles={{
           day: {
             width: "30px",
@@ -57,6 +75,6 @@ export function ApodByDate({
           caption: { fontSize: "14px" },
         }}
       />
-    </>
+    </div>
   );
 }

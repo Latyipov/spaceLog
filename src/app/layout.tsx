@@ -10,7 +10,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ru">
-      <body className="relative">
+      <body className="relative min-h-screen flex flex-col">
         <Providers>
           <Header />
           {children}

@@ -9,7 +9,7 @@ export const Features: FC = () => {
       <div className="max-w-6xl mx-auto flex flex-wrap flex-row justify-around md:grid-cols-3 gap-12 text-center">
         <Link
           href={"/apod"}
-          className="bg-gray-900 rounded-xl overflow-hidden shadow-[0_0_20px_rgba(255,255,255,0.2)] rounded-xl transform hover:scale-[1.02] transition duration-300 w-64"
+          className="bg-gray-900 rounded-xl overflow-hidden shadow-[0_0_20px_rgba(255,255,255,0.2)] rounded-xl transform hover:scale-[1.02] transition duration-300 w-75"
         >
           <Image
             src="/apod-features.jpg"
@@ -19,7 +19,7 @@ export const Features: FC = () => {
             height={500}
           />
           <div className="p-4 text-center">
-            <h3 className="text-blue-400 font-bold text-lg flex items-center justify-center gap-2">
+            <h3 className="text-blue-400 font-bold text-lg flex items-center justify-center gap-2 text-[clamp(1rem,3vw,1.5rem)]">
               🌌 Astronomy Picture of the Day
             </h3>
           </div>
@@ -27,7 +27,7 @@ export const Features: FC = () => {
 
         <Link
           href={"/mars"}
-          className="bg-gray-900 rounded-xl overflow-hidden shadow-[0_0_20px_rgba(255,255,255,0.2)] rounded-xl transform hover:scale-[1.02] transition duration-300 w-64"
+          className="bg-gray-900 rounded-xl overflow-hidden shadow-[0_0_20px_rgba(255,255,255,0.2)] rounded-xl transform hover:scale-[1.02] transition duration-300 w-75"
         >
           <Image
             src="/mars-features.jpg"
@@ -37,7 +37,7 @@ export const Features: FC = () => {
             height={400}
           />
           <div className="p-4 text-center">
-            <h3 className="text-blue-400 font-bold text-lg flex items-center justify-center gap-2">
+            <h3 className="text-blue-400 font-bold text-lg flex items-center justify-center gap-2 text-[clamp(1rem,3vw,1.5rem)]">
               🛰️ Mars Rover Photos
             </h3>
           </div>
@@ -45,7 +45,7 @@ export const Features: FC = () => {
 
         <Link
           href={"/*"}
-          className="bg-gray-900 rounded-xl overflow-hidden shadow-[0_0_20px_rgba(255,255,255,0.2)] rounded-xl transform hover:scale-[1.02] transition duration-300 w-64"
+          className="bg-gray-900 rounded-xl overflow-hidden shadow-[0_0_20px_rgba(255,255,255,0.2)] rounded-xl transform hover:scale-[1.02] transition duration-300 w-75"
         >
           <Image
             src="/space-log-features.jpg"
@@ -55,7 +55,7 @@ export const Features: FC = () => {
             height={400}
           />
           <div className="p-4 text-center">
-            <h3 className="text-blue-400 font-bold text-lg flex items-center justify-center gap-2">
+            <h3 className="text-blue-400 font-bold text-lg flex items-center justify-center gap-2 text-[clamp(1rem,3vw,1.5rem)]">
               📓 Your Space Log
             </h3>
           </div>
