@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
@@ -10,7 +10,11 @@ const errorMap: Record<string, string> = {
   default: "Ошибка входа. Попробуйте ещё раз.",
 };
 
-export function SignIn() {
+export function SignInForm({
+  setForm,
+}: {
+  setForm: Dispatch<SetStateAction<"signin" | "signup">>;
+}) {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,7 +26,7 @@ export function SignIn() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormError(""); // сбрасываем ошибку
+    setFormError("");
 
     const res = await signIn("credentials", {
       email,
@@ -33,31 +37,31 @@ export function SignIn() {
     if (res?.ok) {
       router.push("/");
     } else {
-      setFormError("Неверный email или пароль");
+      setFormError("Wrong email or password");
     }
   };
-
+}
   return (
-    <main className="max-w-md mx-auto mt-20 px-4">
-      <h1 className="text-2xl font-semibold mb-6">Вход в аккаунт</h1>
-
+    <section className="bg-gray-900 p-8 rounded-2xl shadow-2xl w-full max-w-md">
+      <h1 className="text-3xl font-bold text-white text-center mb-6">
+        Sign In
+      </h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
-          className="w-full border px-3 py-2 rounded"
           type="email"
-          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
           required
+          className="w-full px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-
         <input
-          className="w-full border px-3 py-2 rounded"
           type="password"
-          placeholder="Пароль"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
           required
+          className="w-full px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
         {(formError || errorMessage) && (
@@ -68,9 +72,18 @@ export function SignIn() {
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
         >
-          Войти
+          Sign Up
         </button>
       </form>
-    </main>
+      <div className="text-center mt-4 text-gray-400 text-sm">
+        Don&apos;t have an account?{" "}
+        <button
+          onClick={() => setForm("signup")}
+          className="text-blue-400 hover:underline"
+        >
+          Sign Up
+        </button>
+      </div>
+    </section>
   );
 }

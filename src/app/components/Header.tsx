@@ -12,7 +12,7 @@ export const Header: FC = () => {
     <header
       className={`${pathname === "/" && "absolute top-0 left-0"} w-full z-10`}
     >
-      <div className="flex flex-wrap justify-between items-center px-8 py-4 w-full md:w-[80%] mx-auto">
+      <div className="flex flex-wrap justify-center md:justify-between items-center px-8 py-4 w-full md:w-[80%] mx-auto">
         <Link href="/" className="flex items-center space-x-3 min-w-[50px]">
           <Image
             src="nasa-logo.svg"
@@ -22,35 +22,37 @@ export const Header: FC = () => {
             className="min-w-[50px] w-[100px]"
           />
         </Link>
-        <nav className="flex flex-wrap items-center space-x-10 text-[clamp(1rem,3vw,1.7rem)]">
-          <Link
-            href="/apod"
-            className="hover:text-blue-300 transition drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]"
-          >
-            APOD
-          </Link>
-          <Link
-            href="/"
-            className="hover:text-blue-300 transition drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]"
-          >
-            Mars
-          </Link>
-          {status === "authenticated" ? (
+        {status === "loading" ? null : (
+          <nav className="flex flex-wrap items-center space-x-10 text-[clamp(1rem,3vw,1.7rem)]">
             <Link
-              href="#profile"
+              href="/apod"
               className="hover:text-blue-300 transition drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]"
             >
-              Profile
+              APOD
             </Link>
-          ) : (
             <Link
-              href="/auth"
-              className="px-4 py-2 bg-blue-600 rounded-xl hover:bg-blue-700 transition"
+              href="/"
+              className="hover:text-blue-300 transition drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]"
             >
-              Sign In
+              Mars
             </Link>
-          )}
-        </nav>
+            {status === "authenticated" ? (
+              <Link
+                href="/profile"
+                className="hover:text-blue-300 transition drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]"
+              >
+                Profile
+              </Link>
+            ) : (
+              <Link
+                href="/auth"
+                className="px-4 py-2 bg-blue-600 rounded-xl hover:bg-blue-700 transition"
+              >
+                Sign In
+              </Link>
+            )}
+          </nav>
+        )}
       </div>
     </header>
   );

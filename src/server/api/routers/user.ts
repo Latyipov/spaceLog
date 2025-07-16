@@ -1,5 +1,5 @@
 import {
-  createUserSchema,
+  userSchema,
   updateNameUserSchema,
   updateEmailUserSchema,
   updatePasswordUserSchema,
@@ -14,7 +14,7 @@ import { prisma } from "@/server/db";
 
 export const userRouter = createTRPCRouter({
   createNewUser: publicProcedure
-    .input(createUserSchema)
+    .input(userSchema)
     .mutation(async ({ input }) => {
       const existingUser = await prisma.user.findUnique({
         where: { email: input.email },
