@@ -19,7 +19,6 @@ export function SignUpForm({
     e.preventDefault();
     try {
       const req = await register.mutateAsync({ email, name, password });
-      alert("Success! Now you can sign in");
       if (req.success) {
         const res = await signIn("credentials", {
           email,
@@ -30,14 +29,14 @@ export function SignUpForm({
         if (res?.ok && !res.error) {
           router.push("/");
         } else {
-          throw new Error("Ошибка входа");
+          throw new Error("Enter error");
         }
       }
     } catch (err) {
       if (err instanceof Error) {
         alert(err.message);
       } else {
-        alert("Неизвестная ошибка");
+        alert("Unknown error");
       }
     }
   };

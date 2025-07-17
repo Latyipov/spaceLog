@@ -40,7 +40,7 @@ export function SignInForm({
       setFormError("Wrong email or password");
     }
   };
-}
+
   return (
     <section className="bg-gray-900 p-8 rounded-2xl shadow-2xl w-full max-w-md">
       <h1 className="text-3xl font-bold text-white text-center mb-6">
@@ -72,7 +72,7 @@ export function SignInForm({
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
         >
-          Sign Up
+          Sign In
         </button>
       </form>
       <div className="text-center mt-4 text-gray-400 text-sm">

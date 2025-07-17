@@ -9,21 +9,3 @@ export default function ProfilePage() {
     </main>
   );
 }
-
-// const handleUpdateEmail = () => {
-//   // TODO: API call
-//   setMessage("Email updated");
-// };
-
-// const handleUpdatePassword = () => {
-//   // TODO: API call
-//   setMessage("Password updated");
-// };
-
-// const handleDeleteAccount = () => {
-//   const confirmed = confirm("Are you sure you want to delete your account?");
-//   if (confirmed) {
-//     // TODO: API call
-//     setMessage("Account deleted (simulated)");
-//   }
-// };
