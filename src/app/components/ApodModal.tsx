@@ -35,53 +35,56 @@ export function ApodModal({ isOpen, onClose, data }: ApodModalProps) {
           <div className="fixed inset-0 bg-black/70" />
         </TransitionChild>
 
-        <div className="fixed inset-0 overflow-y-auto flex items-center justify-center p-4">
-          <TransitionChild
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="scale-95 opacity-0"
-            enterTo="scale-100 opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="scale-100 opacity-100"
-            leaveTo="scale-95 opacity-0"
-          >
-            <DialogPanel className="bg-gray-900 text-white max-w-xl w-full rounded-xl shadow-lg overflow-hidden">
-              <div className="relative">
-                {data.media_type === "image" ? (
-                  <div className="relative aspect-[4/3]">
-                    <Image
+        <div className="fixed inset-0 overflow-y-auto p-4">
+          <div className="min-h-full flex flex-col items-center justify-center">
+            <TransitionChild
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="scale-95 opacity-0"
+              enterTo="scale-100 opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="scale-100 opacity-100"
+              leaveTo="scale-95 opacity-0"
+            >
+              <DialogPanel className="bg-gray-900 text-white max-w-xl w-full rounded-xl shadow-lg overflow-hidden transition-all">
+                <div className="relative">
+                  {data.media_type === "image" ? (
+                    <div className="w-full">
+                      <Image
+                        src={data.url}
+                        alt={data.title}
+                        width={800}
+                        height={600}
+                        className="object-cover rounded shadow"
+                      />
+                    </div>
+                  ) : (
+                    <iframe
                       src={data.url}
-                      alt={data.title}
-                      fill
-                      className="object-cover rounded shadow h-48 w-full object-cover"
+                      title={data.title}
+                      allowFullScreen
+                      className="w-full aspect-video rounded object-cover"
                     />
-                  </div>
-                ) : (
-                  <iframe
-                    src={data.url}
-                    title={data.title}
-                    allowFullScreen
-                    className="w-full aspect-video rounded h-48 w-full object-cover"
-                  />
-                )}
-                <button
-                  onClick={onClose}
-                  className="absolute top-3 right-3 text-white text-xl hover:text-red-500"
-                >
-                  ✖
-                </button>
-              </div>
-              <div className="p-5">
-                <DialogTitle className="text-2xl font-bold mb-1">
-                  {data.title}
-                </DialogTitle>
-                <p className="text-sm text-gray-400 mb-2">{data.date}</p>
-                <p className="text-gray-200 whitespace-pre-wrap">
-                  {data.explanation}
-                </p>
-              </div>
-            </DialogPanel>
-          </TransitionChild>
+                  )}
+                  <button
+                    onClick={onClose}
+                    className="absolute top-3 right-3 text-white text-xl hover:text-red-500"
+                  >
+                    ✖
+                  </button>
+                </div>
+                <div className="p-5">
+                  <DialogTitle className="text-2xl font-bold mb-1">
+                    {data.title}
+                  </DialogTitle>
+                  <p className="text-sm text-gray-400 mb-2">{data.date}</p>
+                  <p className="text-gray-200 whitespace-pre-wrap">
+                    {data.explanation}
+                  </p>
+                </div>
+              </DialogPanel>
+            </TransitionChild>
+          </div>
         </div>
       </Dialog>
     </Transition>
