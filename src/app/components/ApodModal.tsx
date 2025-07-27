@@ -10,14 +10,22 @@ import {
 import { Fragment } from "react";
 import Image from "next/image";
 import type { ApodData } from "@schemas";
+import { useSession } from "next-auth/react";
 
 interface ApodModalProps {
   isOpen: boolean;
   onClose: () => void;
   data: ApodData | null;
+  onAddToLog: () => void;
 }
 
-export function ApodModal({ isOpen, onClose, data }: ApodModalProps) {
+export function ApodModal({
+  isOpen,
+  onClose,
+  data,
+  onAddToLog,
+}: ApodModalProps) {
+  const { status } = useSession();
   if (!data) return null;
 
   return (
@@ -68,7 +76,8 @@ export function ApodModal({ isOpen, onClose, data }: ApodModalProps) {
                   )}
                   <button
                     onClick={onClose}
-                    className="absolute top-3 right-3 text-white text-xl hover:text-red-500"
+                    style={{ textShadow: "0 1px 2px rgba(0,0,0,0.8)" }}
+                    className="absolute top-3 right-3 text-white text-xl hover:text-blue-500 drop-shadow-2xl"
                   >
                     ✖
                   </button>
@@ -81,6 +90,14 @@ export function ApodModal({ isOpen, onClose, data }: ApodModalProps) {
                   <p className="text-gray-200 whitespace-pre-wrap">
                     {data.explanation}
                   </p>
+                  {status === "authenticated" && (
+                    <button
+                      onClick={onAddToLog}
+                      className="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition block mx-auto cursor-pointer"
+                    >
+                      Add to your log
+                    </button>
+                  )}
                 </div>
               </DialogPanel>
             </TransitionChild>

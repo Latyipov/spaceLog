@@ -3,6 +3,7 @@ import { useState } from "react";
 import type { ApodData } from "@schemas";
 import { Loading } from "@components/Loading/Loading";
 import { ApodModal } from "@components/ApodModal";
+import { AddToLogModal } from "@components/AddToLogModal";
 import Image from "next/image";
 
 type ApodDataViewPropsType = {
@@ -13,15 +14,23 @@ type ApodDataViewPropsType = {
 
 export function ApodDataView({ data, loading, error }: ApodDataViewPropsType) {
   const [selectedCard, setSelectedCard] = useState<ApodData | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const onOpenModal = (data: ApodData) => {
     setSelectedCard(data);
-    setIsOpen(true);
+    setIsModalOpen(true);
   };
-
   const onCloseModal = () => {
-    setIsOpen(false);
+    setIsModalOpen(false);
+    setSelectedCard(null);
+  };
+  const onAddToLog = () => {
+    setIsModalOpen(false);
+    setIsAddModalOpen(true);
+  };
+  const onCloseAddModal = () => {
+    setIsAddModalOpen(false);
     setSelectedCard(null);
   };
 
@@ -65,7 +74,17 @@ export function ApodDataView({ data, loading, error }: ApodDataViewPropsType) {
             </div>
           </div>
         ))}
-      <ApodModal data={selectedCard} isOpen={isOpen} onClose={onCloseModal} />
+      <ApodModal
+        data={selectedCard}
+        isOpen={isModalOpen}
+        onClose={onCloseModal}
+        onAddToLog={onAddToLog}
+      />
+      <AddToLogModal
+        data={selectedCard}
+        isOpen={isAddModalOpen}
+        onClose={onCloseAddModal}
+      />
     </section>
   );
 }

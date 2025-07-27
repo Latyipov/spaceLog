@@ -44,7 +44,7 @@ export function EmailEditableField({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim();
     setEmail(value);
-    const isValid = emailSchema.safeParse({ email: value });
+    const isValid = emailSchema.safeParse(value);
     if (!isValid.success) {
       setError(isValid.error.issues[0].message);
     } else {

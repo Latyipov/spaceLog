@@ -24,10 +24,8 @@ export function ProfileForm() {
     refetch: refetchUser,
   } = trpcApi.user.getUserById.useQuery();
 
-  if (status !== "authenticated") return <p>Not signed in</p>;
-
   if (isUserLoading || isHandleLoading) return <Loading />;
-
+  if (status !== "authenticated") return <p>Not signed in</p>;
   if (userError) {
     return (
       <div className="text-red-500 text-center">

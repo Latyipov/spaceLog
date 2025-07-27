@@ -44,7 +44,7 @@ export function NameEditableField({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim();
     setName(value);
-    const isValid = nameSchema.safeParse({ name: value });
+    const isValid = nameSchema.safeParse(value);
     if (!isValid.success) {
       setError(isValid.error.issues[0].message);
     } else {
