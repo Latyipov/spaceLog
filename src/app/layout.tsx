@@ -2,6 +2,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { Header } from "@components/Header";
 import { Footer } from "@components/Footer";
+import { Toaster } from "react-hot-toast";
 
 export default function RootLayout({
   children,
@@ -15,6 +16,7 @@ export default function RootLayout({
           <Header />
           {children}
           <Footer />
+          <Toaster position="top-center" />
         </Providers>
       </body>
     </html>

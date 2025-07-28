@@ -5,12 +5,12 @@ import "react-day-picker/style.css";
 import { ApodByDate } from "@components/ApodByDate";
 import { ApodByRange } from "@components/ApodByRange";
 import { ApodByCount } from "@components/ApodByCount";
-import { ApodDataView } from "@components/ApodDataView";
+import { DataView } from "@/app/components/DataView";
 import type { ApodData } from "@schemas";
 
 export default function ApodPage() {
   const [activeTab, setActiveTab] = useState<"day" | "range" | "count">("day");
-  const [data, setData] = useState<ApodData[] | null>(null);
+  const [dataCollection, setDataCollection] = useState<ApodData[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -41,22 +41,22 @@ export default function ApodPage() {
         </div>
         {activeTab === "day" && (
           <ApodByDate
-            data={data}
-            setData={setData}
+            data={dataCollection}
+            setData={setDataCollection}
             setLoading={setLoading}
             setError={setError}
           />
         )}
         {activeTab === "range" && (
           <ApodByRange
-            setData={setData}
+            setData={setDataCollection}
             setLoading={setLoading}
             setError={setError}
           />
         )}
         {activeTab === "count" && (
           <ApodByCount
-            setData={setData}
+            setData={setDataCollection}
             setLoading={setLoading}
             setError={setError}
           />
@@ -65,7 +65,12 @@ export default function ApodPage() {
       <h1 className="text-3xl text-center font-bold">
         NASA - Astronomy Picture of the Day
       </h1>
-      <ApodDataView data={data} loading={loading} error={error} />
+      <DataView
+        dataCollection={dataCollection}
+        loading={loading}
+        error={error}
+        type={"apod"}
+      />
     </main>
   );
 }

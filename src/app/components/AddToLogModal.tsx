@@ -12,14 +12,16 @@ import Image from "next/image";
 import type { ApodData } from "@schemas";
 import { trpcApi } from "@/utils/trpc";
 import { Loading } from "@components/Loading/Loading";
+import toast from "react-hot-toast";
 
 interface ApodModalProps {
   isOpen: boolean;
   onClose: () => void;
   data: ApodData | null;
+  type: string;
 }
 
-export function AddToLogModal({ isOpen, onClose, data }: ApodModalProps) {
+export function AddToLogModal({ isOpen, onClose, data, type }: ApodModalProps) {
   const [comment, setComment] = useState("");
   const [tags, setTags] = useState("");
   const [loading, setLoading] = useState(false);
@@ -28,25 +30,35 @@ export function AddToLogModal({ isOpen, onClose, data }: ApodModalProps) {
   const { mutate: createEntry } = trpcApi.entry.createEntry.useMutation({
     onMutate: () => {
       setLoading(true);
+      setError("");
     },
     onSuccess: () => {
       setLoading(false);
+      toast.success("✅ Saved in log!");
+      onClose();
+      setComment("");
+      setTags("");
     },
     onError: (error) => {
       setLoading(false);
-      console.log(error.message);
+      console.log(error.data);
+      if (error.data?.code === "CONFLICT") {
+        setError(error.message);
+      } else {
+        setError(error.message || "Something went wrong");
+      }
     },
   });
 
-  if (loading) return <Loading />;
   if (!data) return null;
 
   const handleSave = () => {
-    createEntry({ ...data, comment: comment, tags: tags.split(",") });
-    console.log("Saved entry:", { comment, tags });
-    setComment("");
-    setTags("");
-    onClose();
+    createEntry({
+      ...data,
+      comment: comment,
+      tags: tags.split(","),
+      type: type,
+    });
   };
   const handleCancel = () => {
     const confirmed = window.confirm("Are you sure that you want close?");
@@ -84,9 +96,56 @@ export function AddToLogModal({ isOpen, onClose, data }: ApodModalProps) {
               leaveTo="scale-95 opacity-0"
             >
               <DialogPanel className="bg-gray-900 text-white max-w-xl w-full rounded-xl shadow-lg overflow-hidden transition-all">
-                <DialogTitle className="text-xl font-semibold text-center">
-                  ✍️ Add to Log
-                </DialogTitle>
+                <div className="relative">
+                  <DialogTitle className="text-xl font-semibold text-center p-1">
+                    ✍️ Add to Log
+                  </DialogTitle>
+                  <button
+                    onClick={onClose}
+                    className="absolute top-3 right-3 text-white text-xl hover:text-blue-500"
+                  >
+                    ✖
+                  </button>
+                </div>
+                <div className="p-6 space-y-4 ">
+                  {loading ? (
+                    <Loading />
+                  ) : (
+                    <>
+                      <textarea
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                        placeholder="Your comment..."
+                        className="w-full p-3 bg-gray-800 rounded-lg text-white resize-none h-28"
+                      />
+                      <input
+                        value={tags}
+                        onChange={(e) => setTags(e.target.value)}
+                        placeholder="Tags (comma-separated)"
+                        className="w-full p-3 bg-gray-800 rounded-lg text-white"
+                      />
+                      {error && (
+                        <div className="text-red-400 text-sm font-medium">
+                          {error}
+                        </div>
+                      )}
+                      <div className="flex justify-between gap-2 pt-2">
+                        <button
+                          onClick={handleCancel}
+                          className="w-1/2 py-2 bg-gray-700 hover:bg-gray-600 rounded-xl"
+                        >
+                          ← Cancel
+                        </button>
+                        <button
+                          onClick={handleSave}
+                          className="w-1/2 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl text-white font-semibold"
+                        >
+                          💾 Save
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
                 <div className="relative">
                   {data.media_type === "image" ? (
                     <Image
@@ -104,13 +163,8 @@ export function AddToLogModal({ isOpen, onClose, data }: ApodModalProps) {
                       className="w-full aspect-video rounded object-cover"
                     />
                   )}
-                  <button
-                    onClick={onClose}
-                    className="absolute top-3 right-3 text-white text-xl hover:text-blue-500"
-                  >
-                    ✖
-                  </button>
                 </div>
+
                 <div className="p-5">
                   <DialogTitle className="text-2xl font-bold mb-1">
                     {data.title}
@@ -119,34 +173,6 @@ export function AddToLogModal({ isOpen, onClose, data }: ApodModalProps) {
                   <p className="text-gray-200 whitespace-pre-wrap">
                     {data.explanation}
                   </p>
-                </div>
-                <div className="p-6 space-y-4">
-                  <textarea
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                    placeholder="Your comment..."
-                    className="w-full p-3 bg-gray-800 rounded-lg text-white resize-none h-28"
-                  />
-                  <input
-                    value={tags}
-                    onChange={(e) => setTags(e.target.value)}
-                    placeholder="Tags (comma-separated)"
-                    className="w-full p-3 bg-gray-800 rounded-lg text-white"
-                  />
-                  <div className="flex justify-between gap-2 pt-2">
-                    <button
-                      onClick={handleCancel}
-                      className="w-1/2 py-2 bg-gray-700 hover:bg-gray-600 rounded-xl"
-                    >
-                      ← Cancel
-                    </button>
-                    <button
-                      onClick={handleSave}
-                      className="w-1/2 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl text-white font-semibold"
-                    >
-                      💾 Save
-                    </button>
-                  </div>
                 </div>
               </DialogPanel>
             </TransitionChild>

@@ -19,7 +19,6 @@ model User {
   accounts      Account[]
   sessions      Session[]
   entries       Entry[]
-  favorites     Favorite[]
 }
 
 model Account {
@@ -68,13 +67,7 @@ model Entry {
   comment     String?
   tags        String[]
   user        User       @relation(fields: [userId], references: [id])
-  favorites   Favorite[]
-}
+  type   String
 
-model Favorite {
-  id      String @id @default(uuid())
-  userId  String
-  entryId String
-  entry   Entry  @relation(fields: [entryId], references: [id])
-  user    User   @relation(fields: [userId], references: [id])
+  @@unique([userId, date, type]) 
 }

@@ -36,6 +36,7 @@ export async function getApodByDate(date: Date): Promise<ApodData> {
   url.searchParams.set("date", formatDate(date));
   const response = await fetch(url.toString());
   responseCheck(response);
+  console.log(response);
   const data = await response.json();
   return apodSchema.parse(data);
 }

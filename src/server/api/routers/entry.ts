@@ -4,33 +4,55 @@ import {
   updateEntrySchema,
   GetByIdOrDeleteEntrySchema,
 } from "@/zodSchemas";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { TRPCError } from "@trpc/server";
 
 export const entryRouter = createTRPCRouter({
   createEntry: protectedProcedure
     .input(createEntrySchema)
     .mutation(async ({ input, ctx }) => {
       const userId = ctx.session.user.id;
-
-      const entry = await ctx.prisma.entry.create({
-        data: {
-          userId,
-          date: new Date(input.date),
-          title: input.title,
-          explanation: input.explanation,
-          url: input.url,
-          hdurl: input.hdurl ?? null,
-          media_type: input.media_type,
-          comment: input.comment ?? null,
-          tags: input.tags ?? [],
-        },
-      });
-      return { succes: true, entry };
+      try {
+        const entry = await ctx.prisma.entry.create({
+          data: {
+            userId,
+            date: new Date(input.date),
+            title: input.title,
+            explanation: input.explanation,
+            url: input.url,
+            hdurl: input.hdurl ?? null,
+            media_type: input.media_type,
+            comment: input.comment ?? null,
+            tags: input.tags ?? [],
+            type: input.type,
+          },
+        });
+        return { success: true, entry };
+      } catch (error) {
+        console.log(error instanceof PrismaClientKnownRequestError);
+        if (
+          typeof error === "object" &&
+          error !== null &&
+          "code" in error &&
+          error.code === "P2002"
+        ) {
+          throw new TRPCError({
+            code: "CONFLICT",
+            message: "This entry has already been created before.",
+          });
+        }
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Unexpected server error",
+          cause: error,
+        });
+      }
     }),
 
   getAllEntries: protectedProcedure.query(async ({ ctx }) => {
     const userId = ctx.session.user.id;
     return await ctx.prisma.entry.findMany({
-      where: { userId: userId },
+      where: { userId },
       orderBy: { date: "desc" },
     });
   }),

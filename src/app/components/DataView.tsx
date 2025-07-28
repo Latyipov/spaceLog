@@ -7,12 +7,18 @@ import { AddToLogModal } from "@components/AddToLogModal";
 import Image from "next/image";
 
 type ApodDataViewPropsType = {
-  data: ApodData[] | null;
+  dataCollection: ApodData[] | null;
   loading: boolean;
   error: string | null;
+  type: string;
 };
 
-export function ApodDataView({ data, loading, error }: ApodDataViewPropsType) {
+export function DataView({
+  dataCollection,
+  loading,
+  error,
+  type,
+}: ApodDataViewPropsType) {
   const [selectedCard, setSelectedCard] = useState<ApodData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -43,8 +49,8 @@ export function ApodDataView({ data, loading, error }: ApodDataViewPropsType) {
       gap-6 p-4 justify-items-center`}
       style={{ gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))" }}
     >
-      {data &&
-        data.map((dailyData) => (
+      {dataCollection &&
+        dataCollection.map((dailyData) => (
           <div
             key={dailyData.date}
             onClick={() => onOpenModal(dailyData)}
@@ -84,6 +90,7 @@ export function ApodDataView({ data, loading, error }: ApodDataViewPropsType) {
         data={selectedCard}
         isOpen={isAddModalOpen}
         onClose={onCloseAddModal}
+        type={type}
       />
     </section>
   );
