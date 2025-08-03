@@ -8,10 +8,10 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import Image from "next/image";
 import type { ApodData } from "@schemas";
 import { trpcApi } from "@/utils/trpc";
 import { Loading } from "@components/Loading/Loading";
+import { MediaThumb } from "@components/MediaThumb";
 import toast from "react-hot-toast";
 
 interface ApodModalProps {
@@ -52,10 +52,19 @@ export function AddToLogModal({ isOpen, onClose, data, type }: ApodModalProps) {
 
   if (!data) return null;
   const handleSave = () => {
+    const parsedTags = tags
+      .split(",")
+      .map((tag) => tag.trim())
+      .filter((tag) => tag !== "");
     createEntry({
-      ...data,
+      date: data.date,
+      title: data.title,
+      explanation: data.explanation,
+      media_type: data.media_type,
+      url: data.url ?? null,
+      hdurl: data.hdurl,
       comment: comment,
-      tags: tags.split(","),
+      tags: parsedTags,
       type: type,
     });
   };
@@ -146,22 +155,11 @@ export function AddToLogModal({ isOpen, onClose, data, type }: ApodModalProps) {
                   )}
                 </div>
                 <div className="relative">
-                  {data.media_type === "image" ? (
-                    <Image
-                      src={data.url}
-                      alt={data.title}
-                      width={800}
-                      height={600}
-                      className="object-cover w-full h-auto"
-                    />
-                  ) : (
-                    <iframe
-                      src={data.url}
-                      title={data.title}
-                      allowFullScreen
-                      className="w-full aspect-video rounded object-cover"
-                    />
-                  )}
+                  <MediaThumb
+                    media_type={data.media_type}
+                    url={data.url ?? ""}
+                    title={data.title}
+                  />
                 </div>
 
                 <div className="p-5">
