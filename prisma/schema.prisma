@@ -55,6 +55,12 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+enum MediaType {
+  image
+  video
+  other
+}
+
 model Entry {
   id          String     @id @default(uuid())
   userId      String
@@ -63,7 +69,7 @@ model Entry {
   explanation String
   url         String?
   hdurl       String?
-  media_type  String?
+  media_type  MediaType?
   comment     String?
   tags        String[]
   user        User       @relation(fields: [userId], references: [id])

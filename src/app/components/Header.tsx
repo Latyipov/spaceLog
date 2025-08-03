@@ -37,12 +37,21 @@ export const Header: FC = () => {
               Mars
             </Link>
             {status === "authenticated" ? (
-              <Link
-                href="/profile"
-                className="hover:text-blue-300 transition drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]"
-              >
-                Profile
-              </Link>
+              <>
+                {" "}
+                <Link
+                  href="/log"
+                  className="hover:text-blue-300 transition drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]"
+                >
+                  Log
+                </Link>
+                <Link
+                  href="/profile"
+                  className="hover:text-blue-300 transition drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]"
+                >
+                  Profile
+                </Link>
+              </>
             ) : (
               <Link
                 href="/auth"

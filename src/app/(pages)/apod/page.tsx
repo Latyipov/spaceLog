@@ -5,7 +5,7 @@ import "react-day-picker/style.css";
 import { ApodByDate } from "@components/ApodByDate";
 import { ApodByRange } from "@components/ApodByRange";
 import { ApodByCount } from "@components/ApodByCount";
-import { DataView } from "@/app/components/DataView";
+import { MediaGrid } from "@components/MediaGrid";
 import type { ApodData } from "@schemas";
 
 export default function ApodPage() {
@@ -19,7 +19,7 @@ export default function ApodPage() {
     { id: "range", label: "By Range" },
     { id: "count", label: "By Count" },
   ] as const;
-
+  console.log(dataCollection);
   return (
     <main className=" mx-auto  w-full md:w-[80%] flex-1 ">
       <div className="flex flex-col md:flex-row justify-center items-center md:items-start gap-4 md:gap-20 p-4 relative min-h-90">
@@ -65,7 +65,7 @@ export default function ApodPage() {
       <h1 className="text-3xl text-center font-bold">
         NASA - Astronomy Picture of the Day
       </h1>
-      <DataView
+      <MediaGrid
         dataCollection={dataCollection}
         loading={loading}
         error={error}

@@ -41,7 +41,7 @@ export function ApodByDate({
         setData([result]);
         initialLoaded.current = true;
       } catch (err: unknown) {
-        setError(err instanceof Error ? err.message : "Unknown error");
+        console.log(err instanceof Error ? err.message : "Unknown error");
       } finally {
         setLoading(false);
       }

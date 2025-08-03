@@ -8,8 +8,8 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { Fragment } from "react";
-import Image from "next/image";
 import type { ApodData } from "@schemas";
+import { MediaThumb } from "@components/MediaThumb";
 import { useSession } from "next-auth/react";
 
 interface ApodModalProps {
@@ -19,7 +19,7 @@ interface ApodModalProps {
   onAddToLog: () => void;
 }
 
-export function ApodModal({
+export function ItemModal({
   isOpen,
   onClose,
   data,
@@ -27,7 +27,7 @@ export function ApodModal({
 }: ApodModalProps) {
   const { status } = useSession();
   if (!data) return null;
-
+  console.log(data);
   return (
     <Transition show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>
@@ -56,24 +56,11 @@ export function ApodModal({
             >
               <DialogPanel className="bg-gray-900 text-white max-w-xl w-full rounded-xl shadow-lg overflow-hidden transition-all">
                 <div className="relative">
-                  {data.media_type === "image" ? (
-                    <div className="w-full">
-                      <Image
-                        src={data.url}
-                        alt={data.title}
-                        width={800}
-                        height={600}
-                        className="object-cover rounded shadow"
-                      />
-                    </div>
-                  ) : (
-                    <iframe
-                      src={data.url}
-                      title={data.title}
-                      allowFullScreen
-                      className="w-full aspect-video rounded object-cover"
-                    />
-                  )}
+                  <MediaThumb
+                    media_type={data.media_type}
+                    url={data.url ?? ""}
+                    title={data.title}
+                  />
                   <button
                     onClick={onClose}
                     style={{ textShadow: "0 1px 2px rgba(0,0,0,0.8)" }}

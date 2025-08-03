@@ -4,7 +4,6 @@ import {
   updateEntrySchema,
   GetByIdOrDeleteEntrySchema,
 } from "@/zodSchemas";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { TRPCError } from "@trpc/server";
 
 export const entryRouter = createTRPCRouter({
@@ -29,7 +28,6 @@ export const entryRouter = createTRPCRouter({
         });
         return { success: true, entry };
       } catch (error) {
-        console.log(error instanceof PrismaClientKnownRequestError);
         if (
           typeof error === "object" &&
           error !== null &&
@@ -88,7 +86,12 @@ export const entryRouter = createTRPCRouter({
         where: { id: input.id },
         data: {
           comment: input.comment,
-          tags: input.tags,
+          tags:
+            input.tags === null
+              ? { set: [] }
+              : input.tags === undefined
+              ? undefined
+              : { set: input.tags },
         },
       });
       return { success: true, entry: updated };

@@ -1,31 +1,30 @@
 import { z } from "zod";
 
-export const createEntrySchema = z.object({
-  date: z.string().min(1),
-  title: z.string().min(1),
+export const EntrySchema = z.object({
+  id: z.string().uuid(),
+  date: z.string().nonempty(),
+  title: z.string().nonempty(),
   explanation: z.string(),
-  url: z.string().url(),
-  hdurl: z.string().url().optional(),
-  media_type: z.enum(["image", "video"]),
-  comment: z.string().optional(),
-  tags: z.array(z.string()).optional(),
+  url: z.string().url().nullable(),
+  hdurl: z.string().url().nullable().optional(),
+  media_type: z.enum(["image", "video", "other"]).nullable(),
+  comment: z.string().optional().nullable(),
+  tags: z.array(z.string()).nullable(),
   type: z.string().min(4),
 });
 
-export const updateEntrySchema = createEntrySchema
-  .pick({
-    comment: true,
-    tags: true,
-    type: true,
-  })
-  .extend({
-    id: z.string().uuid(),
-  });
+export const createEntrySchema = EntrySchema.omit({ id: true });
 
-export const GetByIdOrDeleteEntrySchema = z.object({
-  id: z.string().uuid(),
+export const updateEntrySchema = EntrySchema.pick({
+  id: true,
+  comment: true,
+  tags: true,
+  type: true,
 });
 
+export const GetByIdOrDeleteEntrySchema = EntrySchema.pick({ id: true });
+
+export type Entry = z.infer<typeof EntrySchema>;
 export type CreateEntry = z.infer<typeof createEntrySchema>;
 export type UpdateEntry = z.infer<typeof updateEntrySchema>;
 export type GetOrDeleteEntry = z.infer<typeof GetByIdOrDeleteEntrySchema>;

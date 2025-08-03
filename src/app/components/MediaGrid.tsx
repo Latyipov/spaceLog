@@ -2,23 +2,23 @@
 import { useState } from "react";
 import type { ApodData } from "@schemas";
 import { Loading } from "@components/Loading/Loading";
-import { ApodModal } from "@components/ApodModal";
+import { ItemModal } from "@/app/components/ItemModal";
 import { AddToLogModal } from "@components/AddToLogModal";
-import Image from "next/image";
+import { MediaThumb } from "@components/MediaThumb";
 
-type ApodDataViewPropsType = {
+type MediaGridPropsType = {
   dataCollection: ApodData[] | null;
   loading: boolean;
   error: string | null;
   type: string;
 };
 
-export function DataView({
+export function MediaGrid({
   dataCollection,
   loading,
   error,
   type,
-}: ApodDataViewPropsType) {
+}: MediaGridPropsType) {
   const [selectedCard, setSelectedCard] = useState<ApodData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -56,23 +56,13 @@ export function DataView({
             onClick={() => onOpenModal(dailyData)}
             className="bg-gray-800 rounded-xl shadow-md overflow-hidden hover:scale-[1.02] transition transform cursor-pointer w-full max-w-[600px] min-w-[300px]"
           >
-            {dailyData.media_type === "image" ? (
-              <div className="relative aspect-[4/3]">
-                <Image
-                  src={dailyData.url}
-                  alt={dailyData.title}
-                  fill
-                  className="object-cover rounded shadow h-48 w-full object-cover"
-                />
-              </div>
-            ) : (
-              <iframe
-                src={dailyData.url}
+            <div className="relative aspect-[4/3]">
+              <MediaThumb
+                media_type={dailyData.media_type}
+                url={dailyData.url ?? ""}
                 title={dailyData.title}
-                allowFullScreen
-                className="w-full aspect-video rounded h-48 w-full object-cover"
               />
-            )}
+            </div>
             <div className="p-3">
               <h3 className="text-xl font-semibold text-white">
                 {dailyData.title}
@@ -80,12 +70,14 @@ export function DataView({
             </div>
           </div>
         ))}
-      <ApodModal
+
+      <ItemModal
         data={selectedCard}
         isOpen={isModalOpen}
         onClose={onCloseModal}
         onAddToLog={onAddToLog}
       />
+
       <AddToLogModal
         data={selectedCard}
         isOpen={isAddModalOpen}

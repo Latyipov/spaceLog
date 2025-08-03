@@ -51,7 +51,6 @@ export function AddToLogModal({ isOpen, onClose, data, type }: ApodModalProps) {
   });
 
   if (!data) return null;
-
   const handleSave = () => {
     createEntry({
       ...data,

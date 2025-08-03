@@ -22,6 +22,7 @@ function formatDate(date: Date): string {
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 }
+
 function responseCheck(response: Response) {
   if (!response.ok) {
     throw new Error(
@@ -36,8 +37,8 @@ export async function getApodByDate(date: Date): Promise<ApodData> {
   url.searchParams.set("date", formatDate(date));
   const response = await fetch(url.toString());
   responseCheck(response);
-  console.log(response);
   const data = await response.json();
+  console.log(data);
   return apodSchema.parse(data);
 }
 
