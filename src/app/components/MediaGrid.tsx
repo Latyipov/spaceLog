@@ -2,7 +2,7 @@
 import { useState, useCallback } from "react";
 import type { ApodData } from "@schemas";
 import { Loading } from "@components/Loading/Loading";
-import { ItemModal } from "@/app/components/ItemModal";
+import { APODModal } from "@/app/components/APODModal";
 import { MediaThumb } from "@components/MediaThumb";
 
 type MediaGridPropsType = {
@@ -62,7 +62,7 @@ export function MediaGrid({
         ))}
 
       {selectedCard && (
-        <ItemModal
+        <APODModal
           data={selectedCard}
           isOpen={isModalOpen}
           onClose={onCloseModal}

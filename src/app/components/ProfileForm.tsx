@@ -50,13 +50,11 @@ export function ProfileForm() {
 
       <NameEditableField
         currentName={user?.name ?? ""}
-        setMessage={setMessage}
         setLoading={setIsHandleLoading}
         refetchUser={refetchUser}
       />
       <EmailEditableField
         currentEmail={user?.email ?? ""}
-        setMessage={setMessage}
         setLoading={setIsHandleLoading}
         refetchUser={refetchUser}
       />
@@ -66,10 +64,7 @@ export function ProfileForm() {
       />
       <SignOutButton />
 
-      <DeleteAccountButton
-        setMessage={setMessage}
-        setLoading={setIsHandleLoading}
-      />
+      <DeleteAccountButton setLoading={setIsHandleLoading} />
     </div>
   );
 }

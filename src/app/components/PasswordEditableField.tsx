@@ -2,6 +2,7 @@ import { useState, Dispatch, SetStateAction } from "react";
 import { trpcApi } from "@/utils/trpc";
 import { userSchema } from "@/zodSchemas";
 import { z } from "zod";
+import toast from "react-hot-toast";
 
 const inputPasswordsSchema = z.object({
   oldPassword: userSchema.shape.password,
@@ -17,7 +18,6 @@ type PasswordEditableFieldProps = {
 };
 
 export function PasswordEditableField({
-  setMessage,
   setLoading,
 }: PasswordEditableFieldProps) {
   const [inputPasswords, setInputPasswords] = useState<inputPasswordsType>({
@@ -32,12 +32,12 @@ export function PasswordEditableField({
     },
     onSuccess: () => {
       setLoading(false);
-      setMessage({ text: "Password updated", type: "success" });
+      toast.success("✅ Password updated");
       setInputPasswords({ oldPassword: "", newPassword: "" });
     },
     onError: (error) => {
       setLoading(false);
-      setMessage({ text: error.message, type: "error" });
+      toast.error(error.message);
     },
   });
 

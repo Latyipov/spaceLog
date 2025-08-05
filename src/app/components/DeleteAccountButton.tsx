@@ -2,30 +2,26 @@
 import { Dispatch, SetStateAction } from "react";
 import { trpcApi } from "@/utils/trpc";
 import { signOut } from "next-auth/react";
+import toast from "react-hot-toast";
 
-type messageType = { text: string; type: "success" | "error" };
 type DeleteAccountButtonProps = {
-  setMessage: Dispatch<SetStateAction<messageType | null>>;
   setLoading: Dispatch<SetStateAction<boolean>>;
 };
 
-export function DeleteAccountButton({
-  setMessage,
-  setLoading,
-}: DeleteAccountButtonProps) {
+export function DeleteAccountButton({ setLoading }: DeleteAccountButtonProps) {
   const { mutate: deleteUser } = trpcApi.user.deleteById.useMutation({
     onSuccess: () => {
-      signOut({ callbackUrl: "/" });
-      window.alert("Deleted");
+      signOut({ callbackUrl: "/?message=account-deleted" });
     },
     onError: (error) => {
-      setMessage({ text: error.message, type: "error" });
+      console.log(error.message);
+      toast.error(error.message);
     },
   });
 
   const onDeleteAccount = () => {
     const confirmed = window.confirm(
-      "Are you sure that you want delete account?"
+      "Are you sure you want to delete your account? All your logs will be permanently lost."
     );
     if (confirmed) {
       setLoading(true);

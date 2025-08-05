@@ -15,14 +15,14 @@ import { MediaThumb } from "@components/MediaThumb";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 
-interface ApodModalProps {
+interface APODModalProps {
   isOpen: boolean;
   onClose: () => void;
   data: ApodData;
   type: string;
 }
 
-export function ItemModal({ isOpen, onClose, data, type }: ApodModalProps) {
+export function APODModal({ isOpen, onClose, data, type }: APODModalProps) {
   const { status } = useSession();
   const [comment, setComment] = useState("");
   const [tags, setTags] = useState("");

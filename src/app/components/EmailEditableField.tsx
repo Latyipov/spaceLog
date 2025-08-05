@@ -1,9 +1,9 @@
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { trpcApi } from "@/utils/trpc";
 import { userSchema } from "@/zodSchemas";
+import toast from "react-hot-toast";
 
 const emailSchema = userSchema.shape.email;
-type messageType = { text: string; type: "success" | "error" };
 
 type RefetchUserType = ReturnType<
   typeof trpcApi.user.getUserById.useQuery
@@ -11,14 +11,12 @@ type RefetchUserType = ReturnType<
 
 type NameEditableFieldProps = {
   currentEmail: string;
-  setMessage: Dispatch<SetStateAction<messageType | null>>;
   setLoading: Dispatch<SetStateAction<boolean>>;
   refetchUser: RefetchUserType;
 };
 
 export function EmailEditableField({
   currentEmail,
-  setMessage,
   setLoading,
   refetchUser,
 }: NameEditableFieldProps) {
@@ -32,12 +30,12 @@ export function EmailEditableField({
     onSuccess: () => {
       setLoading(false);
       refetchUser();
-      setMessage({ text: "Email updated", type: "success" });
+      toast.success("✅ Email updated");
     },
     onError: (error) => {
       setLoading(false);
       console.log(error.message);
-      setMessage({ text: error.message, type: "error" });
+      toast.error(error.message);
     },
   });
 
