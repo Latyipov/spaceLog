@@ -30,12 +30,12 @@ export const Header: FC = () => {
             >
               APOD
             </Link>
-            <Link
+            {/* <Link
               href="/"
               className="hover:text-blue-300 transition drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]"
             >
               Mars
-            </Link>
+            </Link> */}
             {status === "authenticated" ? (
               <>
                 {" "}

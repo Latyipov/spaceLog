@@ -25,7 +25,7 @@ export const Features: FC = () => {
           </div>
         </Link>
 
-        <Link
+        {/* <Link
           href={"/mars"}
           className="bg-gray-900 rounded-xl overflow-hidden shadow-[0_0_20px_rgba(255,255,255,0.2)] rounded-xl transform hover:scale-[1.02] transition duration-300 w-75"
         >
@@ -41,10 +41,10 @@ export const Features: FC = () => {
               🛰️ Mars Rover Photos
             </h3>
           </div>
-        </Link>
+        </Link> */}
 
         <Link
-          href={"/*"}
+          href={"/log"}
           className="bg-gray-900 rounded-xl overflow-hidden shadow-[0_0_20px_rgba(255,255,255,0.2)] rounded-xl transform hover:scale-[1.02] transition duration-300 w-75"
         >
           <Image

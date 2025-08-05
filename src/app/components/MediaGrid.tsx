@@ -1,9 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import type { ApodData } from "@schemas";
 import { Loading } from "@components/Loading/Loading";
 import { ItemModal } from "@/app/components/ItemModal";
-import { AddToLogModal } from "@components/AddToLogModal";
 import { MediaThumb } from "@components/MediaThumb";
 
 type MediaGridPropsType = {
@@ -21,22 +20,13 @@ export function MediaGrid({
 }: MediaGridPropsType) {
   const [selectedCard, setSelectedCard] = useState<ApodData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-  const onOpenModal = (data: ApodData) => {
+  const onOpenModal = useCallback((data: ApodData) => {
     setSelectedCard(data);
     setIsModalOpen(true);
-  };
+  }, []);
   const onCloseModal = () => {
     setIsModalOpen(false);
-    setSelectedCard(null);
-  };
-  const onAddToLog = () => {
-    setIsModalOpen(false);
-    setIsAddModalOpen(true);
-  };
-  const onCloseAddModal = () => {
-    setIsAddModalOpen(false);
     setSelectedCard(null);
   };
 
@@ -71,19 +61,14 @@ export function MediaGrid({
           </div>
         ))}
 
-      <ItemModal
-        data={selectedCard}
-        isOpen={isModalOpen}
-        onClose={onCloseModal}
-        onAddToLog={onAddToLog}
-      />
-
-      <AddToLogModal
-        data={selectedCard}
-        isOpen={isAddModalOpen}
-        onClose={onCloseAddModal}
-        type={type}
-      />
+      {selectedCard && (
+        <ItemModal
+          data={selectedCard}
+          isOpen={isModalOpen}
+          onClose={onCloseModal}
+          type={type}
+        />
+      )}
     </section>
   );
 }

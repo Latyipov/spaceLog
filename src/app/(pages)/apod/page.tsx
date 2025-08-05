@@ -19,7 +19,7 @@ export default function ApodPage() {
     { id: "range", label: "By Range" },
     { id: "count", label: "By Count" },
   ] as const;
-  console.log(dataCollection);
+
   return (
     <main className=" mx-auto  w-full md:w-[80%] flex-1 ">
       <div className="flex flex-col md:flex-row justify-center items-center md:items-start gap-4 md:gap-20 p-4 relative min-h-90">

@@ -93,7 +93,12 @@ export function PasswordEditableField({
         )}
         <button
           data-field="password"
-          disabled={!!errors?.oldPassword || !!errors?.newPassword}
+          disabled={
+            !!errors?.oldPassword ||
+            !!errors?.newPassword ||
+            !inputPasswords.oldPassword ||
+            !inputPasswords.newPassword
+          }
           onClick={() =>
             updatePassword({
               oldPassword: inputPasswords.oldPassword,
