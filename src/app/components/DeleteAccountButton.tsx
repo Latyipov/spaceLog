@@ -11,7 +11,8 @@ type DeleteAccountButtonProps = {
 export function DeleteAccountButton({ setLoading }: DeleteAccountButtonProps) {
   const { mutate: deleteUser } = trpcApi.user.deleteById.useMutation({
     onSuccess: () => {
-      signOut({ callbackUrl: "/?message=account-deleted" });
+      localStorage.setItem("toastMessage", "account-deleted");
+      signOut({ callbackUrl: "/" });
     },
     onError: (error) => {
       console.log(error.message);

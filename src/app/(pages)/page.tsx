@@ -2,18 +2,16 @@
 import { Intro } from "@components/Intro";
 import { Features } from "@components/Features";
 import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 
 export default function Home() {
-  const searchParams = useSearchParams();
-  const message = searchParams.get("message");
-
   useEffect(() => {
+    const message = localStorage.getItem("toastMessage");
     if (message === "account-deleted") {
       toast.success("✅ Your account has been deleted.");
+      localStorage.removeItem("toastMessage");
     }
-  }, [message]);
+  }, []);
 
   return (
     <main className="flex flex-col min-h-screen">
